@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+  wordpress:
+    image: jameswangcnln/wordpress
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: wordpress
+    ports:
+      - 7803:80
+    environment:
+      WORDPRESS_DB_PASSWORD: example
+    depends_on:
+      - mysql
+    volumes:
+      - ./config/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    volumes:
+      - /home/james/wordpress/datadir:/var/lib/mysql
+
